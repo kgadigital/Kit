@@ -1,0 +1,41 @@
+﻿@model KitAplication.Models.SystemModel
+
+@{
+    var selectedId = ViewData["RouteValueSelectSystem"];
+}
+<div class="shadow-border-small box-margin-top-bottom box-bg">
+    <h6>System</h6>
+<form asp-action="UpdateSystem" asp-route-SelectSystem="@selectedId">
+    <div class="row">
+        <div class="col-12">
+            <label asp-for="SystemName"></label>
+            <input asp-for="SystemName" placeholder="Systemets namn" class="form-control"/>
+
+            <label asp-for="Model"></label>
+            <input asp-for="Model" placeholder="Ange model" class="form-control" />
+
+            <label asp-for="Prefix"></label>
+                <input asp-for="Prefix" formnovalidate="formnovalidate" placeholder="Suffix (Valfritt)" class="form-control" />
+
+             <label asp-for="SystemContent"></label>
+            <textarea asp-for="SystemContent" type="text" rows="8" cols="20" class="form-control" id="SystemText" placeholder="System text"></textarea>
+            <span asp-validation-for="SystemContent" class="text-danger"></span>
+
+            <input hidden asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+                 <button type="submit" class="button-white mt-2" id="AddRole" placeholder="Content">Updatera</button>
+     @*           @if (ViewBag.SystemMessage != null)
+                {
+                    <div class="alert alert-info">@ViewBag.SystemMessage</div>
+                } @if (ViewBag.SystemErrorMessage != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.SystemErrorMessage</div>
+                }*@
+           
+           
+        </div>
+    </div>
+</form> 
+</div>
+

@@ -1,0 +1,32 @@
+﻿@using KitAplication.Models;
+@model MessageModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var selectedId = ViewData["RouteValueSelectSystem"];
+}
+<div class="shadow-border-small box-margin-top-bottom box-bg">
+
+        <h6>Användarmeddelande</h6>
+
+<form asp-action="CreateMessage" asp-route-SelectSystem="@selectedId">
+    <select class="form-control" asp-for="RoleName" id="exampleFormControlSelect1">
+        <option selected="true" disabled >Välj roll</option>
+        @foreach (var role in ViewBag.Roles)
+        {
+                             
+                <option class="selected-role" >@role</option>
+                                
+        }
+            
+    </select>
+    <span asp-validation-for="RoleName" class="text-danger"></span>
+    @*<span asp-validation-for="RoleName"></span>*@
+    <textarea asp-for="Content" type="text" rows="5" cols="15" class="form-control" placeholder="Content"></textarea>
+    <span asp-validation-for="Content" class="text-danger"></span>
+    <input hidden asp-for="SystemId"/>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <button  class="button-white mt-2" id="AddRole" placeholder="Content">Lägg till</button>
+</form>
+</div>

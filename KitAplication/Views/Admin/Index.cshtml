@@ -1,0 +1,73 @@
+﻿@model KitAplication.Models.ViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Systems";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+  
+
+    ViewData["RouteValueSelectSystem"] = Model.RouteValueSelectSystem;
+}
+
+<div id="DisplayForms">
+    <div id="DisplaySelectsList" class="box-margin-top-bottom">
+            <div class="row">
+                <h6>Välj system i listan eller skapa ett nytt</h6>
+                @using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+                {
+                    <div class="col-12 d-flex">
+                    @Html.DropDownList("SelectSystem",(IEnumerable<SelectListItem>)ViewBag.DropDownListSystems, new { @class = "form-control" })
+                        <input type="submit" class="button-white" value="Välj" />
+                    </div>
+
+                }
+            </div>
+    </div>
+    @if (ViewBag.choice == -1)
+    { 
+        <partial name="_CreateSystem" model="Model.SystemModel" />
+        @if (ViewBag.SystemErrorMessage != null)
+        {
+            <div class="alert alert-danger">@ViewBag.SystemErrorMessage</div>
+        }
+    }
+
+    @if (ViewBag.choice == 1)
+    {
+        <partial name="_UpdateSystem" model="Model.SystemModel" />
+
+        if (ViewBag.MessageExist == false)
+        {
+            <partial name="_CreateMessage" model="Model.MessageModel" />
+        }
+        else
+        {
+            <partial name="_UpdateMessage" model="Model.MessageModel" />
+        }
+        @if (ViewBag.MessageErrorMessage != null)
+        {
+            <div class="alert alert-danger">@ViewBag.MessageErrorMessage</div>
+        }@if (ViewBag.MessageMessage != null)
+        {
+            <div class="alert">@ViewBag.MessageMessage</div>
+        }
+
+        <div class="mt-3 mb-3">
+            <p>*<i>Systemmeddelandet hjälper till att ställa in assistentens beteende.</i></p>
+            <p class="mt-2">*<i>Användarmeddelandena hjälper assistenten att instruera och ge exempel på önskat beteende. Notera att den sista inlagda rollen måste vara en assistant</i></p>
+        </div>
+
+        <partial name="_activatePartial" model="Model.SystemActive" />
+        <partial name="_DeleteSystemPartial" model="Model.SystemModel" />
+    }
+</div>
+<div id="DisplayList">
+   
+        @if (Model.SystemModel != null)
+        {
+            @await Component.InvokeAsync("MessageList",Model.SystemModel.Id)
+        }
+        else
+        {
+            @await Component.InvokeAsync("MessageList")
+
+        }
+</div>

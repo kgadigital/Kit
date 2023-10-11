@@ -1,0 +1,18 @@
+﻿@model KitAplication.Models.Account.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="login-section">
+    <form asp-action="Login" asp-route-returnUrl="@ViewData["returnUrl"]">
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1">
+            <span asp-validation-for="Password" class="form-text text-danger"></span>
+        </div>
+        <button type="submit" class="button-white">Logga in</button>
+    </form>
+    <a asp-controller="Home" asp-action="Index">Tillbaka till startsida</a>
+</div>
+
+

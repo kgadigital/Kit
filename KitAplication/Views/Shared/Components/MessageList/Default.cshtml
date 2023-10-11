@@ -1,0 +1,55 @@
+﻿@model KitAplication.Models.ViewModels.ListMessageDisplay
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var selectedId = ViewData["RouteValueSelectSystem"];
+}
+
+@if (Model.SystemModel != null)
+{
+ <div class="shadow-border light-blue-bg">
+    <div class="display-header">
+        <h5>System:</h5>
+        <p>@Model.SystemModel.SystemContent</p>
+    </div>
+    @if (Model.Message != null)
+    {
+        
+            @foreach (var message in Model.Message)
+        {
+          <div class="display-header">
+            @* <div class="d-flex justify-content-between">
+                 <div>*@
+                            <p><strong>@message.RoleName : </strong>@message.Content</p>
+                 @*</div>
+                <div>*@
+                    <div class="mt-2 d-flex">
+                    <a asp-action="Index" class="Links" asp-route-updateMessageId="@message.Id" asp-route-SelectSystem="@selectedId">Edit</a>
+                    <form asp-action="DeliteMessage" asp-route-SelectSystem="@selectedId">
+                            <input asp-for="@message.Id" hidden name="Id" value="@message.Id"/>
+                            <button class="Links" type="submit">Radera</button>
+                        </form>
+                    </div>
+                           
+                @*</div>
+                 
+                 
+            </div>*@
+         </div>
+        }
+        
+        
+
+    }
+    else {
+        @*<p>Finns inga roller inlagda ännu</p>*@}
+</div>
+
+}
+
+
+
+
+
+

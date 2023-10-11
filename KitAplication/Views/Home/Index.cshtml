@@ -1,0 +1,97 @@
+﻿@model List<KitAplication.Models.LinkModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="chat-section">
+    <div class="chat-section-dialog">
+        <div class="bot-container">
+            <div class="bot-msg white-space-normal">
+                @ViewBag.Message
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-section-input">
+        @if (ViewBag.IsActive == true)
+        {
+            @Html.AntiForgeryToken()
+            <input class="form-control me-2 my-text" id="my-text" type="text" />
+            <button type="submit" id="send-text" class="chat-send-button border" name="msg"><i class="fa-solid fa-paper-plane"></i></button>
+        }
+    </div>
+</div>
+<div class="link-section">
+    <div class="link-section-items">
+        @if (Model.Any())
+        {
+            @foreach (var link in Model)
+            {
+                @* The rel attribute sets the relationship between your page and the linked URL.Setting it to noopener noreferrer is to prevent a type of phishing known as tabnabbing.*@
+                <div class="chat-links-items"><a href="@link.Url" rel="noopener noreferrer" target="_blank">@link.Name</a></div>
+            }
+        }
+    </div>
+    <div class="link-section-login">
+        <a asp-controller="Admin" asp-action="Index" rel="noopener noreferrer" target="_blank" id="login" class="chat-send-button"><i class="fa-solid fa-key"></i></a>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#send-text").click(sendText);
+
+            $("#my-text").keydown(function (event) {
+                if (event.keyCode == 13) {
+                    sendText();
+                    event.preventDefault();
+                }
+            });
+        });
+        async function sendText(){
+            var questionInput = $("#my-text").val();
+
+            // Validate input
+            if (questionInput.trim() === "") {
+                return;
+            }
+            // sanitize any HTML tags entered by the user
+            questionInput = $("<div>").text(questionInput).html();
+            
+
+            $('.chat-section-dialog').append('<div class="your-container"><div class="your-msg">' + questionInput + '</div></div>');
+
+            $("#my-text").val("");
+            // add bubble
+            $('.chat-section-dialog').append('<div class="bot-container loading-bubble"><div class="bot-msg"><div class="d-flex align-items-end"><div class="loading-1"></div><div class="loading-2"></div><div class="loading-3"></div></div></div></div>');
+           
+            ScroleDown();
+            var token = $('input:hidden[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                type: 'POST',
+                url: '/Home/GetAnswer',
+                data: { questionInput:questionInput },
+                headers: {
+                    'RequestVerificationToken':token
+                },
+                success: function (respons) {
+
+
+                    // remove bubble
+                    $('.loading-bubble').remove();
+                    $('.chat-section-dialog').append('<div class="bot-container"><div class="bot-msg"> ' + respons + '</div></div>');
+                    $("#my-text").val("");
+                    ScroleDown();
+                },
+                error: function (error) {
+                    $('.loading-bubble').remove();
+                }
+            });
+        }
+        function ScroleDown() {
+            var messageBody = document.querySelector('.chat-section-dialog');
+            messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+        }
+
+    </script>
+}

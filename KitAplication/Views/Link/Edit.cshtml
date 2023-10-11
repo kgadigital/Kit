@@ -1,0 +1,39 @@
+﻿@model KitAplication.Models.LinkModel
+
+@{
+    ViewData["Title"] = "Updatera";
+    Layout = "_AdminLayout";
+}
+
+<div class="display-box">
+    <h5>Updatera länk</h5>
+
+    <div class="shadow-border-small box-bg">
+         <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group mt-3">
+                        <label asp-for="Name" class="control-label">Namn</label>
+                        <input asp-for="Name" class="form-control" />
+                   
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label asp-for="Url" class="control-label"></label>
+                        <input asp-for="Url" class="form-control" />
+                        <span asp-validation-for="Url" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3 mb-3">
+                        <input type="submit" value="Updatera" class="button-white" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="m-2">
+        <a asp-action="Index">Tillbaka</a>
+    </div>
+</div>
+

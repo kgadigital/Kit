@@ -1,0 +1,40 @@
+﻿@model KitAplication.Models.ChatSettingsModel
+@{
+    ViewData["Title"] = "chatSettings";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="display-box">
+    <h5>Ändra inställningar</h5>
+    @if (Model!=null)
+    {
+        <div class="shadow-border-small box-bg">
+        <form asp-action="Settings" class="mb-3">
+                <label class="mt-3 fw-bold">Om Ingen chat är aktiv visas texten i första chatbubblan:</label>
+            <textarea asp-for="IsNotActiveMessage" class="form-control">@Model.IsNotActiveMessage</textarea>
+
+
+                <label class="mt-3 fw-bold">Om en chat är aktiv visas texten i första chatbubblan</label>
+            <textarea asp-for="IsActiveMessage" class="form-control">@Model.IsActiveMessage</textarea>
+
+
+                <label class="mt-3 fw-bold">Om Reponsen från openai resulterar i felmeddelande, svara med:</label>
+            <textarea asp-for="RequestFailMessage" class="form-control">@Model.RequestFailMessage</textarea>
+
+            <input hidden asp-for="Id" />
+            @*använd bara modelstate validation på modelen, inte property validation*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <button type="submit" class="button-white mt-3">Updatera</button>
+        </form>
+       
+            <a asp-action="Index" class="mt-3">Tillbaka</a>
+        
+       </div>
+    }
+    else
+    {
+        <p>Something whent wrong when getting chatSettings</p>
+    }
+</div>
+
+

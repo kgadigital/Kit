@@ -1,0 +1,21 @@
+﻿@model KitAplication.Models.SystemModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var selectedId = ViewData["RouteValueSelectSystem"];
+}
+
+<div class="shadow-border-small delete-bg box-margin-top-bottom mt-3">
+    <form asp-action="DeleteSystem" asp-route-SelectSystem="@selectedId">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                 <label>Radera Systemet</label>
+                <input hidden asp-for="Id" />
+               
+            </div>
+            <input type="submit" class="button-white" value="Radera" />
+        </div>
+    </form>
+
+</div>

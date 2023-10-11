@@ -1,0 +1,46 @@
+﻿@model IEnumerable<KitAplication.Models.LinkModel>
+@{
+    ViewData["Title"] = "Länkar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="display-box">   
+    <h5>Länkar</h5>
+    <div class="shadow-border-small box-bg">
+        <div class="mb-3">
+            <a asp-action="Create" class="button-white">Skapa ny</a>
+        </div>
+         <table class="table bg-white">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Url)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="shadow-border-small">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="td-max-lengt">
+                            @Html.DisplayFor(modelItem => item.Url)
+                        </td>
+                        <td class="d-flex justify-content-end">
+                            <a asp-action="Edit" class="button-white" asp-route-id="@item.Id">Ändra</a> 
+                            <a asp-action="Delete" class="button-white"  asp-route-id="@item.Id">Radera</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+         </table>
+    </div>
+   
+</div>
+
