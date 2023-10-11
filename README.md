@@ -2,7 +2,8 @@
 
 ## 1. System Overview
 
-The goal of this project is to develop a chatbot using MVC .NET and the OpenAI API, which will allow employees of Karlskoga Municipality to ask IT-related questions. The chatbot will be accessible through a popup chat window on the municipality's website.
+The goal of this project is to develop a chatbot using MVC .NET and the OpenAI API, which will allow employees of Karlskoga Municipality to ask IT-related questions. We configured so the chatbot will be accessible through a popup chat window on the municipality's website.
+
 
 The project includes an administrator login that enables administrators to create and manage multiple OpenAI systems, chat settings, and create links to the front-end chatbot. Each OpenAI system can be customized with a specific system name, OpenAI model, prefix for user question input, and system content text. Administrators can create system messages for each system with specific roles (assistant/user) and their content text to provide the chatbot with better instructions on how to handle different types of user interactions. The prefix is added to the beginning of the user's question to provide clearer instructions since the chatbot model may not always be attentive to the system content instructions.
 
@@ -37,19 +38,23 @@ To set up the development environment and run the "KIT-chatbot" system, follow t
 
 1. Clone the project repository from the version control system. This fetches the project source code.
 
-2. Open the solution file in Visual Studio. We use Visual Studio as our development IDE.
+2. Open the solution file in Visual Studio. We use Visual Studio as our development IDE (there in the start meny you can add a link to this repository and copy it to your own new project).
 
-3. Restore the NuGet packages used in the project. This ensures all necessary libraries are available.
+4. Restore the NuGet packages used in the project. This ensures all necessary libraries are available.
 
-4. Configure the database connection string in the `SqlContext.cs` file. Specify how the application connects to the database.(In the ClassLibrary)
+5. Configure the database connection string in the `appsettings.json` file. (And the developer appsettings for running in the developer)
 
-6. Configure the OpenAi key string in the `appsettings.json` file. 
+6. Configure the OpenAi key string in the `appsettings.json` file.(And the developer appsettings for running in the developer)
+   
+8. Configure the login password string in the `appsettings.json` file. (And the developer appsettings for running in the developer)
 
-9. Run database migrations using Entity Framework Core:
+9. Add FontAwsome script in header in _Layout file to use the icons (Go to folder Views -> Shared -> and open the file _Layout.cshtml) [https://fontawesome.com/]
+
+10. Run database migrations using Entity Framework Core:
    - Open the Package Manager Console.
    - Execute the command: `Update-Database`. This initializes and updates the database schema.
 
-10. Build the solution. Compile the project to create the executable.
+11. Build the solution. Compile the project to create the executable.
 
 ### Running the Application:
 
@@ -57,9 +62,6 @@ To set up the development environment and run the "KIT-chatbot" system, follow t
 
 3. The application will launch in the default web browser. You can access and interact with it here.
 
-4. Run database migrations using Entity Framework Core:
-   - Open the Package Manager Console.
-   - Execute the command: `Update-Database`. This ensures the database schema is up to date.
 
 ## 3. System Functionality
 
@@ -123,15 +125,53 @@ The codebase of the "KIT-Chatbot" system follows a structured organization to en
 
 - Google Fonts: [https://fonts.google.com/](https://fonts.google.com/)
 
-- Karlskoga Graphics Manual: [Download PDF](http://intranatet/download/18.387692b115eecfadc7d2ebde/1654699047473/grafisk-manual-karlskoga-kommun-riktlinje.pdf)
-
 ### Library of Scalable Vector Icons:
 
 - Font Awesome
 
+
+### Setup  popup chat window on the municipality's website
+Add an IFrame and a toggle icon, to open the iframe, to the municipality's website. 
+
+## Publishing the Project to a Server or a Local folder using Visual Studio
+
+There are several alternatives for packaging the project into a publish folder, whether locally or on a server. This guide will focus on one method:
+
+1. Set the project configuration to "Release."
+
+2. Navigate to the "Build" menu.
+
+3. Click on "Publish Application."
+
+4. Click "Add a Profile."
+
+5. Select the target. In this case, choose "Folder" (select the appropriate option for your needs).
+
+6. Specify a target location. Here, you can enter either a local path or the server path.
+
+7. Once you've configured the settings, click the "Publish" button.
+
+8. You're done! Your project has been published.
+
+Please note that the exact steps may vary slightly depending on the version of Visual Studio you are using, but this general outline should help guide you through the process.
+
+
+
 ### Autenticaion and autorization setup
 
 The application has a login system that is implemented using the AddAuthentication method in the program.cs file. It uses cookie-based authentication and sets the login path to /Account/Login. The expiration time for the user's session is set to 30 minutes, and a sliding expiration is enabled.
-
 The application also has a custom authorization policy that is defined using the AddAuthorization method in the program.cs file. The policy requires that the user is authenticated and has a specific claim called "IsAuthenticated" with a value of "true". This policy is set as the default policy for the application.
 With this setup, only authenticated users with the "IsAuthenticated" claim can access the admin sections of the application.
+
+#### security enhancement to consider
+
+- For more protection and security. Configure login to admin site with integration to azure AD. For the database connectionstring,password and api key configure azure keyvault or something simulary.
+- Demo: How to Use Azure Key Vault to Keep Your .NET API Secrets Safe!
+- [[![image](https://github.com/jessicaMolin/KitAplication/assets/123623207/bd1b7552-75c2-4d3d-9f50-c33a09acefe9)](https://www.youtube.com/watch?v=ZXfuxisC0IA)](https://www.youtube.com/watch?v=ZXfuxisC0IA)
+
+
+### Webbapp that signs in users [https://learn.microsoft.com/sv-se/azure/active-directory/develop/scenario-web-app-sign-user-overview?tabs=aspnetcore](https://learn.microsoft.com/sv-se/azure/active-directory/develop/scenario-web-app-sign-user-overview?tabs=aspnetcore)
+### Webbapps that signs in users and call Webbapi for user [https://learn.microsoft.com/sv-se/azure/active-directory/develop/quickstart-web-app-aspnet-core-sign-in](https://learn.microsoft.com/sv-se/azure/active-directory/develop/quickstart-web-app-aspnet-core-sign-in)
+- [https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-restrict-your-app-to-a-set-of-users](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-restrict-your-app-to-a-set-of-users) 
+- [https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-restrict-your-app-to-a-set-of-users#assign-the-app-to-users-and-groups-to-restrict-access](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-restrict-your-app-to-a-set-of-users#assign-the-app-to-users-and-groups-to-restrict-access) 
+
