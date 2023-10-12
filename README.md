@@ -159,9 +159,8 @@ Please note that the exact steps may vary slightly depending on the version of V
 
 ### Autenticaion and autorization setup
 
-The application has a login system that is implemented using the AddAuthentication method in the program.cs file. It uses cookie-based authentication and sets the login path to /Account/Login. The expiration time for the user's session is set to 30 minutes, and a sliding expiration is enabled.
-The application also has a custom authorization policy that is defined using the AddAuthorization method in the program.cs file. The policy requires that the user is authenticated and has a specific claim called "IsAuthenticated" with a value of "true". This policy is set as the default policy for the application.
-With this setup, only authenticated users with the "IsAuthenticated" claim can access the admin sections of the application.
+The application has a login system that is implemented using the AddAuthentication method in the program.cs file. It uses cookie-based authentication and sets the login path to /Account/Login. The expiration time for the user's session is set, and a sliding expiration is enabled.
+The application also has a custom authorization policy that is defined using the AddAuthorization method in the program.cs file. The policy requires that the user is authenticate This policy is set as the default policy for the application.
 
 #### security enhancement to consider
 
